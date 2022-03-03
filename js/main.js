@@ -1,4 +1,13 @@
 const COUNT_ADS = 10;
+const MIN_PRICE = 100;
+const MAX_PRICE = 1000;
+const MAX_ROOMS = 10;
+const MAX_GUESTS = 10;
+const MIN_LOCATION_LAT = 35.65;
+const MAX_LOCATION_LAT = 35.7;
+const MIN_LOCATION_LNG = 139.7;
+const MAX_LOCATION_LNG = 139.8;
+const DECIMAL = 5;
 
 const PHOTOS_AD = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
@@ -94,15 +103,6 @@ const shuffleArray = (array) => {
 };
 
 const createAd = () => {
-  const MIN_PRICE = 100;
-  const MAX_PRICE = 1000;
-  const MAX_ROOMS = 10;
-  const MAX_GUESTS = 10;
-  const MIN_LOCATION_LAT = 35.65;
-  const MAX_LOCATION_LAT = 35.7;
-  const MIN_LOCATION_LNG = 139.7;
-  const MAX_LOCATION_LNG = 139.8;
-  const DECIMAL = 5;
   const price = getRandomInt(MIN_PRICE, MAX_PRICE);
   const type = getRandomElement(TIPES_AD);
   const title = `${getRandomElement(TITLES_AD)} ${type} for ${price} per night`;
