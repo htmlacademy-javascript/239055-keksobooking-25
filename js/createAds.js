@@ -59,6 +59,6 @@ const createAd = () => {
   };
 };
 
-const ads = () => Array.from({length: COUNT_ADS}, createAd);
+const createAds = () => Array.from({length: COUNT_ADS}, createAd);
 
-export {ads};
+export {createAds};

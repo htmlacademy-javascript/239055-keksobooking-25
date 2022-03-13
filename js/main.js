@@ -1,3 +1,3 @@
-import {ads} from './createAds.js';
+import {renderCard} from './renderCard.js';
 
-ads();
+renderCard(1);
