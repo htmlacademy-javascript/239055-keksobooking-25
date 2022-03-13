@@ -56,36 +56,12 @@ const shuffleArray = (array) => {
   return copyArray;
 };
 
-const getTypeAd = (typeObject) => {
-  let type;
-  switch (typeObject) {
-    case 'flat':
-      type = 'Квартира';
-      break;
-    case 'bungalow':
-      type = 'Бунгало';
-      break;
-    case 'house':
-      type = 'Дом';
-      break;
-    case 'palace':
-      type = 'Дворец';
-      break;
-    case 'hotel':
-      type = 'Отель';
-      break;
-  }
-
-  return type;
-};
-
 export {
   getRandomInt,
   getRandomElement,
   shuffleArray,
   getRandomFloat,
   getLinksAvatar,
-  getRandomArray,
-  getTypeAd
+  getRandomArray
 };
 

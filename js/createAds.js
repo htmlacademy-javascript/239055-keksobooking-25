@@ -21,12 +21,13 @@ import {
   PHOTOS_AD,
   FEATURES_AD,
   TIMES_RENTAL,
-  TIPES_AD, TITLES_AD
+  TYPES_AD,
+  TITLES_AD
 } from './data.js';
 
 const createAd = () => {
   const price = getRandomInt(MIN_PRICE, MAX_PRICE);
-  const type = getRandomElement(TIPES_AD);
+  const type = getRandomElement(Object.keys(TYPES_AD));
   const title = `${getRandomElement(TITLES_AD)} ${type} for ${price} per night`;
   const rooms = getRandomInt(1, MAX_ROOMS);
   const guests = getRandomInt(1, MAX_GUESTS);
