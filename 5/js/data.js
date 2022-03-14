@@ -30,13 +30,13 @@ const TIMES_RENTAL = [
   '14:00',
 ];
 
-const TIPES_AD = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel',
-];
+const TYPES_AD = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+  hotel: 'Отель',
+};
 
 const TITLES_AD = [
   'Cheap',
@@ -60,5 +60,6 @@ export {
   PHOTOS_AD,
   FEATURES_AD,
   TIMES_RENTAL,
-  TIPES_AD, TITLES_AD
+  TYPES_AD,
+  TITLES_AD
 };

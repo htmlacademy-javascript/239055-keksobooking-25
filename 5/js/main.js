@@ -1,3 +1,3 @@
-import {renderCard} from './renderCard.js';
+import { renderCard } from './renderCard.js';
 
-renderCard(1);
+renderCard(0);
