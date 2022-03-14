@@ -1,13 +1,10 @@
-import {createAds} from './createAds.js';
 import {TYPES_AD} from './data.js';
 
-const cards = createAds();
 const templateAd = document.querySelector('#card').content.querySelector('.popup');
 const map = document.querySelector('#map-canvas');
 
-const renderCard = (indexCard) => {
-  const card = cards[indexCard];
-  const {author, offer} = card;
+const renderCard = (itemArray) => {
+  const {author, offer} = itemArray;
   const someAd = templateAd.cloneNode(true);
   const title = someAd.querySelector('.popup__title');
   const address = someAd.querySelector('.popup__text--address');

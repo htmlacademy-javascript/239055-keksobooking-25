@@ -1,3 +1,6 @@
+import { createAds } from './createAds.js';
 import { renderCard } from './renderCard.js';
 
-renderCard(0);
+const cards = createAds();
+
+renderCard(cards[0]);
