@@ -60,30 +60,17 @@ pristine.addValidator(guestsNumber, validateCapacity, getGuestsErrorMessage);
 
 const typeAd = form.querySelector('#type');
 const price = form.querySelector('#price');
+const priceByType = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000
+};
 
 const changeMinPrice = () => {
-  switch (typeAd.value) {
-    case 'bungalow':
-      price.min = 0;
-      price.placeholder = '0';
-      break;
-    case 'flat':
-      price.min = 1000;
-      price.placeholder = '1000';
-      break;
-    case 'hotel':
-      price.min = 3000;
-      price.placeholder = '3000';
-      break;
-    case 'house':
-      price.min = 5000;
-      price.placeholder = '5000';
-      break;
-    case 'palace':
-      price.min = 10000;
-      price.placeholder = '10000';
-      break;
-  }
+  price.min = priceByType[typeAd.value];
+  price.placeholder = priceByType[typeAd.value];
 };
 
 typeAd.addEventListener('change', changeMinPrice);
