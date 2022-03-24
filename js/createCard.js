@@ -1,9 +1,8 @@
-import {TYPES_AD} from './data.js';
+import { TYPES_AD } from './data.js';
 
 const templateAd = document.querySelector('#card').content.querySelector('.popup');
-// const map = document.querySelector('#map-canvas');
 
-const renderCard = (itemArray) => {
+const createCard = (itemArray) => {
   const {author, offer} = itemArray;
   const someAd = templateAd.cloneNode(true);
   const title = someAd.querySelector('.popup__title');
@@ -82,7 +81,6 @@ const renderCard = (itemArray) => {
   }
 
   return someAd;
-  // map.append(someAd);
 };
 
-export {renderCard};
+export { createCard };

@@ -1,10 +1,12 @@
 import { switchForm } from './switchForm.js';
-import { createAds } from './createAds.js';
-import { renderCard } from './renderCard.js';
+import { createCard } from './createCard.js';
 
-const DEFAULT_VIIEW = [35.6895, 139.69171];
+const DEFAULT_VIIEW = [35.69467, 139.76326];
+const SIZE_MAIN_MARKER = [52, 52];
+const ANCHOR_MAIN_MARKER = [25, 52];
+const SIZE_SIMILAR_MARKER = [40, 40];
+const ANCHOR_SIMILAR_MARKER = [20, 40];
 const DECIMAL = 5;
-const ads = createAds();
 const address = document.querySelector('#address');
 address.value = DEFAULT_VIIEW;
 switchForm();
@@ -24,27 +26,30 @@ L.tileLayer(
 
 const mainMarkerIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52]
+  iconSize: SIZE_MAIN_MARKER,
+  iconAnchor: ANCHOR_MAIN_MARKER
 });
 const mainMarker = L.marker(DEFAULT_VIIEW, {draggable: true, icon: mainMarkerIcon});
 mainMarker.addTo(mapCanvas);
 
-mainMarker.on('moveend', () => {
+mainMarker.on('move', () => {
   const position = mainMarker.getLatLng();
   address.value = `${position.lat.toFixed(DECIMAL)}, ${position.lng.toFixed(DECIMAL)}`;
 });
 
 const similarMarkerIcon = L.icon({
   iconUrl: 'img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconSize: SIZE_SIMILAR_MARKER,
+  iconAnchor: ANCHOR_SIMILAR_MARKER
 });
 
-ads.forEach((element) => {
-  const {location: {lat, lng}} = element;
-  const similarMarker = L.marker([lat, lng], {icon: similarMarkerIcon});
-  similarMarker.addTo(mapCanvas);
-  similarMarker.bindPopup(renderCard(element));
-});
+const renderCards = (cards) => {
+  cards.forEach((element) => {
+    const {location: {lat, lng}} = element;
+    const similarMarker = L.marker([lat, lng], {icon: similarMarkerIcon});
+    similarMarker.addTo(mapCanvas);
+    similarMarker.bindPopup(createCard(element));
+  });
+};
 
+export { renderCards };
