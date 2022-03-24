@@ -1,7 +1,7 @@
 import {TYPES_AD} from './data.js';
 
 const templateAd = document.querySelector('#card').content.querySelector('.popup');
-const map = document.querySelector('#map-canvas');
+// const map = document.querySelector('#map-canvas');
 
 const renderCard = (itemArray) => {
   const {author, offer} = itemArray;
@@ -81,7 +81,8 @@ const renderCard = (itemArray) => {
     avatar.remove();
   }
 
-  map.append(someAd);
+  return someAd;
+  // map.append(someAd);
 };
 
 export {renderCard};
