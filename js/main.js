@@ -1,9 +1,7 @@
 import './formValidate.js';
-import { switchForm } from './switchForm.js';
+import './priceSlider.js';
 import { createAds } from './createAds.js';
-import { renderCard } from './renderCard.js';
+import { renderCards } from './map.js';
 
-const cards = createAds();
-
-renderCard(cards[0]);
-switchForm();
+const ads = createAds();
+renderCards(ads);
