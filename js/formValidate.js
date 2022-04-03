@@ -89,7 +89,23 @@ const changeTimeOut = () => {
 timeIn.addEventListener('change', changeTimeIn);
 timeOut.addEventListener('change', changeTimeOut);
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const setUserFormSubmit = (onSuccess, onError) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      fetch('https://25.javascript.pages.academy/keksobooking', {
+        method: 'POST',
+        body: new FormData(evt.target)
+      })
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+          } else {
+            onError();
+          }
+        });
+    }
+  });
+};
+
+export {setUserFormSubmit};

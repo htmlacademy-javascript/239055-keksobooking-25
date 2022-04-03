@@ -2,11 +2,16 @@ import { switchForm } from './switchForm.js';
 import { createCard } from './createCard.js';
 
 const DEFAULT_VIIEW = [35.69467, 139.76326];
-const SIZE_MAIN_MARKER = [52, 52];
-const ANCHOR_MAIN_MARKER = [25, 52];
-const SIZE_SIMILAR_MARKER = [40, 40];
-const ANCHOR_SIMILAR_MARKER = [20, 40];
+const MAIN_MARKER = {
+  size: [52, 52],
+  anchor: [25, 52]
+};
+const SIMILAR_MARKER = {
+  size: [40, 40],
+  anchor: [20, 40]
+};
 const DECIMAL = 5;
+const resetButton = document.querySelector('.ad-form__reset');
 const address = document.querySelector('#address');
 address.value = DEFAULT_VIIEW;
 switchForm();
@@ -26,8 +31,8 @@ L.tileLayer(
 
 const mainMarkerIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
-  iconSize: SIZE_MAIN_MARKER,
-  iconAnchor: ANCHOR_MAIN_MARKER
+  iconSize: MAIN_MARKER.size,
+  iconAnchor: MAIN_MARKER.anchor
 });
 const mainMarker = L.marker(DEFAULT_VIIEW, {draggable: true, icon: mainMarkerIcon});
 mainMarker.addTo(mapCanvas);
@@ -39,8 +44,8 @@ mainMarker.on('move', () => {
 
 const similarMarkerIcon = L.icon({
   iconUrl: 'img/pin.svg',
-  iconSize: SIZE_SIMILAR_MARKER,
-  iconAnchor: ANCHOR_SIMILAR_MARKER
+  iconSize: SIMILAR_MARKER.size,
+  iconAnchor: SIMILAR_MARKER.anchor
 });
 
 const renderCards = (cards) => {
@@ -51,5 +56,12 @@ const renderCards = (cards) => {
     similarMarker.bindPopup(createCard(element));
   });
 };
+
+resetButton.addEventListener('click', () => {
+  mainMarker.setLatLng(DEFAULT_VIIEW);
+  mapCanvas.setView(DEFAULT_VIIEW, 10);
+  mapCanvas.closePopup();
+  address.value = DEFAULT_VIIEW; // не работает
+});
 
 export { renderCards };
