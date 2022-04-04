@@ -1,4 +1,10 @@
-import { TYPES_AD } from './data.js';
+const TYPES_AD = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+  hotel: 'Отель',
+};
 
 const templateAd = document.querySelector('#card').content.querySelector('.popup');
 

@@ -1,3 +1,5 @@
+import { sendData } from './api.js';
+
 Pristine.addMessages('ru', {
   required: 'Поле обязательно для заполнения',
   email: 'В этом поле требуется действующий адрес электронной почты',
@@ -15,6 +17,15 @@ Pristine.addMessages('ru', {
 Pristine.setLocale('ru');
 
 const form = document.querySelector('.ad-form');
+const buttonSubmit = form.querySelector('.ad-form__submit');
+
+const blockButtonSubmit = () => {
+  buttonSubmit.disabled = true;
+};
+
+const unblockButtonSubmit = () => {
+  buttonSubmit.disabled = false;
+};
 
 const pristine = new Pristine(form, {
   classTo: 'ad-form__element',
@@ -93,19 +104,20 @@ const setUserFormSubmit = (onSuccess, onError) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      fetch('https://25.javascript.pages.academy/keksobooking', {
-        method: 'POST',
-        body: new FormData(evt.target)
-      })
-        .then((response) => {
-          if (response.ok) {
-            onSuccess();
-          } else {
-            onError();
-          }
-        });
+      blockButtonSubmit();
+      sendData(
+        () => {
+          onSuccess();
+          unblockButtonSubmit();
+        },
+        () => {
+          onError();
+          unblockButtonSubmit();
+        },
+        new FormData(evt.target)
+      );
     }
   });
 };
 
-export {setUserFormSubmit};
+export { setUserFormSubmit };

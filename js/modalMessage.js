@@ -1,49 +1,52 @@
 import { isEscapeKey } from './util.js';
 
-const bodyHTML = document.querySelector('.body');
+const bodyHTML = document.querySelector('body');
 const form = document.querySelector('.ad-form');
 const templateSuccess = document.querySelector('#success').content.querySelector('.success');
 const templateError = document.querySelector('#error').content.querySelector('.error');
-const successMessage = templateSuccess.cloneNode(true);
-const errorMessage = templateError.cloneNode(true);
-const closeErrorMessage = errorMessage.querySelector('.error__button');
+const onSuccess = templateSuccess.cloneNode(true);
+const onError = templateError.cloneNode(true);
+const closeOnError = onError.querySelector('.error__button');
 
-const showSuccessMessage = () => {
-  bodyHTML.appendChild(successMessage);
+const showFormMessage = (message) => () => {
+  bodyHTML.appendChild(message);
+  message.classList.add('shownMessage');
 };
 
-successMessage.addEventListener('click', () => {
-  successMessage.remove();
+// const closeFormMessage = () => {
+//   const shownMessage = document.querySelector('.shownMessage');
+//   shownMessage.remove();
+// };
+
+onSuccess.addEventListener('click', () => {
+  onSuccess.remove();
   form.reset();
 });
 
 document.addEventListener('keydown', (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    successMessage.remove();
+    onSuccess.remove();
   }
 });
 
-const showErrorMessage = () => {
-  bodyHTML.appendChild(errorMessage);
-};
-
-errorMessage.addEventListener('click', () => {
-  errorMessage.remove();
+onError.addEventListener('click', () => {
+  onError.remove();
 });
 
-closeErrorMessage.addEventListener('click', () => {
-  errorMessage.remove();
+closeOnError.addEventListener('click', () => {
+  onError.remove();
 });
 
 document.addEventListener('keydown', (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    errorMessage.remove();
+    onError.remove();
   }
 });
 
 export {
-  showSuccessMessage,
-  showErrorMessage
+  showFormMessage,
+  onSuccess,
+  onError
 };
