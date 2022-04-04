@@ -1,3 +1,4 @@
+const START_SLIDER = 0;
 const sliderElement = document.querySelector('.ad-form__slider');
 const priceInput = document.querySelector('#price');
 priceInput.value = 0;
@@ -7,7 +8,7 @@ noUiSlider.create(sliderElement, {
     min: 0,
     max: 100000
   },
-  start: 0,
+  start: START_SLIDER,
   step: 1,
   connect: 'lower',
   format: {
@@ -27,3 +28,8 @@ sliderElement.noUiSlider.on('update', () => {
 priceInput.addEventListener('change', () => {
   sliderElement.noUiSlider.set(priceInput.value);
 });
+
+export {
+  sliderElement,
+  START_SLIDER
+};

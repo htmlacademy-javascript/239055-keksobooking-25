@@ -1,7 +1,6 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, formReset } from './util.js';
 
 const bodyHTML = document.querySelector('body');
-const form = document.querySelector('.ad-form');
 const templateSuccess = document.querySelector('#success').content.querySelector('.success');
 const templateError = document.querySelector('#error').content.querySelector('.error');
 const onSuccess = templateSuccess.cloneNode(true);
@@ -13,21 +12,23 @@ const showFormMessage = (message) => () => {
   message.classList.add('shownMessage');
 };
 
-// const closeFormMessage = () => {
-//   const shownMessage = document.querySelector('.shownMessage');
-//   shownMessage.remove();
-// };
-
-onSuccess.addEventListener('click', () => {
-  onSuccess.remove();
-  form.reset();
-});
-
-document.addEventListener('keydown', (evt) => {
+function onCloseFormMessage (evt) {
+  const shownMessage = document.querySelector('.shownMessage');
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    onSuccess.remove();
+    if (shownMessage.classList.contains('success')) {
+      formReset();
+    }
+    shownMessage.remove();
+    document.removeEventListener('keydown', onCloseFormMessage);
   }
+}
+
+document.addEventListener('keydown', onCloseFormMessage);
+
+onSuccess.addEventListener('click', () => {
+  formReset();
+  onSuccess.remove();
 });
 
 onError.addEventListener('click', () => {
@@ -36,13 +37,6 @@ onError.addEventListener('click', () => {
 
 closeOnError.addEventListener('click', () => {
   onError.remove();
-});
-
-document.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    onError.remove();
-  }
 });
 
 export {

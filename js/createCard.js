@@ -6,6 +6,9 @@ const TYPES_AD = {
   hotel: 'Отель',
 };
 
+const WIDTH_PHOTO = 45;
+const HEIGHT_PHOTO = 40;
+
 const templateAd = document.querySelector('#card').content.querySelector('.popup');
 
 const createCard = (itemArray) => {
@@ -51,7 +54,7 @@ const createCard = (itemArray) => {
 
   timeAd.textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
 
-  if (features !== undefined) {
+  if (features) {
     featuresAd.innerHTML = '';
     features.forEach((element) => {
       const featureItem = document.createElement('li');
@@ -63,20 +66,20 @@ const createCard = (itemArray) => {
     featuresAd.remove();
   }
 
-  if (description !== undefined) {
+  if (description) {
     descriptionAd.textContent = description;
   } else {
     descriptionAd.remove();
   }
 
-  if (photos !== undefined) {
+  if (photos) {
     photosAd.innerHTML = '';
     photos.forEach((element) => {
       const photo = document.createElement('img');
       photo.src = element;
       photo.classList.add('popup__photo');
-      photo.width = 45;
-      photo.height = 40;
+      photo.width = WIDTH_PHOTO;
+      photo.height = HEIGHT_PHOTO;
       photo.alt = 'Фотография жилья';
       photosAd.appendChild(photo);
     });
@@ -84,11 +87,7 @@ const createCard = (itemArray) => {
     photosAd.remove();
   }
 
-  if (avatar !== undefined) {
-    avatarAd.src = avatar;
-  } else {
-    avatarAd.remove();
-  }
+  avatarAd.src = avatar;
 
   return someAd;
 };

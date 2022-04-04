@@ -1,3 +1,13 @@
+import {
+  mainMarker,
+  DEFAULT_MARKER_POSITION,
+  DEFAULT_VIEW,
+  mapCanvas,
+  address
+} from './map.js';
+
+import { sliderElement, START_SLIDER } from './priceSlider.js';
+
 const showDataErrorMessage = () => {
   const messageContainer = document.querySelector('.map__canvas');
   const message = document.createElement('div');
@@ -24,8 +34,22 @@ const showDataErrorMessage = () => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+const form = document.querySelector('.ad-form');
+const formReset = (evt) => {
+  if (evt) {
+    evt.preventDefault();
+  }
+  form.reset();
+  mainMarker.setLatLng(DEFAULT_MARKER_POSITION);
+  mapCanvas.setView(DEFAULT_MARKER_POSITION, DEFAULT_VIEW);
+  mapCanvas.closePopup();
+  address.value = DEFAULT_MARKER_POSITION;
+  sliderElement.noUiSlider.set(START_SLIDER);
+};
+
 export {
   showDataErrorMessage,
-  isEscapeKey
+  isEscapeKey,
+  formReset
 };
 

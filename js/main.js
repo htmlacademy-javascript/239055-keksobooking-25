@@ -1,5 +1,4 @@
 import './formValidate.js';
-import './priceSlider.js';
 import { renderCards } from './map.js';
 import { showDataErrorMessage } from './util.js';
 import { setUserFormSubmit } from './formValidate.js';

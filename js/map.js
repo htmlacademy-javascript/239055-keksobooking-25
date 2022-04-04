@@ -1,26 +1,28 @@
 import { switchForm } from './switchForm.js';
 import { createCard } from './createCard.js';
 
-const DEFAULT_VIIEW = [35.69467, 139.76326];
+const DEFAULT_MARKER_POSITION = [35.69467, 139.76326];
+const DEFAULT_VIEW = 10;
 const MAIN_MARKER = {
-  size: [52, 52],
-  anchor: [25, 52]
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [25, 52]
 };
 const SIMILAR_MARKER = {
-  size: [40, 40],
-  anchor: [20, 40]
+  iconUrl: 'img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40]
 };
 const DECIMAL = 5;
-const resetButton = document.querySelector('.ad-form__reset');
 const address = document.querySelector('#address');
-address.value = DEFAULT_VIIEW;
+address.value = DEFAULT_MARKER_POSITION;
 switchForm();
 
 const mapCanvas = L.map('map-canvas');
 mapCanvas.on('load', () => {
   switchForm(true);
 });
-mapCanvas.setView(DEFAULT_VIIEW, 10);
+mapCanvas.setView(DEFAULT_MARKER_POSITION, DEFAULT_VIEW);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -29,12 +31,8 @@ L.tileLayer(
   },
 ).addTo(mapCanvas);
 
-const mainMarkerIcon = L.icon({
-  iconUrl: 'img/main-pin.svg',
-  iconSize: MAIN_MARKER.size,
-  iconAnchor: MAIN_MARKER.anchor
-});
-const mainMarker = L.marker(DEFAULT_VIIEW, {draggable: true, icon: mainMarkerIcon});
+const mainMarkerIcon = L.icon(MAIN_MARKER);
+const mainMarker = L.marker(DEFAULT_MARKER_POSITION, {draggable: true, icon: mainMarkerIcon});
 mainMarker.addTo(mapCanvas);
 
 mainMarker.on('move', () => {
@@ -42,11 +40,7 @@ mainMarker.on('move', () => {
   address.value = `${position.lat.toFixed(DECIMAL)}, ${position.lng.toFixed(DECIMAL)}`;
 });
 
-const similarMarkerIcon = L.icon({
-  iconUrl: 'img/pin.svg',
-  iconSize: SIMILAR_MARKER.size,
-  iconAnchor: SIMILAR_MARKER.anchor
-});
+const similarMarkerIcon = L.icon(SIMILAR_MARKER);
 
 const renderCards = (cards) => {
   cards.forEach((element) => {
@@ -57,11 +51,11 @@ const renderCards = (cards) => {
   });
 };
 
-resetButton.addEventListener('click', () => {
-  mainMarker.setLatLng(DEFAULT_VIIEW);
-  mapCanvas.setView(DEFAULT_VIIEW, 10);
-  mapCanvas.closePopup();
-  address.value = DEFAULT_VIIEW; // не работает
-});
-
-export { renderCards };
+export {
+  mainMarker,
+  DEFAULT_MARKER_POSITION,
+  DEFAULT_VIEW,
+  mapCanvas,
+  address,
+  renderCards
+};

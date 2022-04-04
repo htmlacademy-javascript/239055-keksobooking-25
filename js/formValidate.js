@@ -1,23 +1,10 @@
+import './priceSlider.js';
 import { sendData } from './api.js';
-
-Pristine.addMessages('ru', {
-  required: 'Поле обязательно для заполнения',
-  email: 'В этом поле требуется действующий адрес электронной почты',
-  number: 'В этом поле необходимо указать число',
-  integer: 'то поле требует целочисленного значения',
-  url: 'В этом поле необходимо указать действительный URL-адрес веб-сайта.',
-  tel: 'В этом поле необходимо указать действительный номер телефона',
-  maxlength: 'Длина поля не должна превышать ${1} символов',
-  minlength: 'Длина поля не может быть менее ${1} символов',
-  min: 'Минимально допустимое значение - ${1}',
-  max: 'Максимально допустимое значение - ${1}',
-  pattern: 'Соответствуйте запрошенному формату',
-  equals: 'Поля не совпадают'
-});
-Pristine.setLocale('ru');
+import { formReset } from './util.js';
 
 const form = document.querySelector('.ad-form');
 const buttonSubmit = form.querySelector('.ad-form__submit');
+const resetButton = form.querySelector('.ad-form__reset');
 
 const blockButtonSubmit = () => {
   buttonSubmit.disabled = true;
@@ -119,5 +106,7 @@ const setUserFormSubmit = (onSuccess, onError) => {
     }
   });
 };
+
+resetButton.addEventListener('click', formReset);
 
 export { setUserFormSubmit };
