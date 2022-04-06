@@ -1,67 +1,55 @@
-import {COUNT_ADS} from './data.js';
+import {
+  mainMarker,
+  DEFAULT_MARKER_POSITION,
+  DEFAULT_VIEW,
+  mapCanvas,
+  address
+} from './map.js';
 
-const getRandomInt = (min, max) => {
-  if (min < 0 || min >= max) {
-    return 'Неправильные аргументы';
-  }
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+import { sliderElement, START_SLIDER } from './priceSlider.js';
+
+const showDataErrorMessage = () => {
+  const messageContainer = document.querySelector('.map__canvas');
+  const message = document.createElement('div');
+  message.style.zIndex = 1000;
+  message.style.padding = '50px';
+  message.style.fontSize = '30px';
+  message.style.textAlign = 'center';
+  message.style.width = '50%';
+  message.style.left = '50%';
+  message.style.top = '50%';
+  message.style.transform = 'translate(-50%, -50%)';
+  message.style.borderRadius = '20px';
+  message.style.position = 'absolute';
+  message.style.margin = '0 auto';
+  message.style.backgroundColor = '#ededed';
+  message.style.opacity = '0.9';
+  message.textContent = 'Не удалось загрузить данные. Попробуйте обновить страницу';
+  messageContainer.append(message);
+
+  setTimeout(() => {
+    message.remove();
+  }, 5000);
 };
 
-const getRandomFloat = (min, max, decimal) => {
-  if (min < 0 || min >= max || decimal < 0) {
-    return 'Неправильные аргументы';
-  }
-  return (Math.random() * (max - min) + min).toFixed(decimal);
-};
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const getRandomElement = (elements) => elements[getRandomInt(0, elements.length-1)];
-
-const linksAvatar = Array.from({length: COUNT_ADS}, (v, k) => k+1);
-
-const getLinksAvatar = () => {
-  let randomIndex = getRandomInt(0, linksAvatar.length-1);
-  if (linksAvatar.length === 1) {
-    randomIndex = 0;
+const form = document.querySelector('.ad-form');
+const formReset = (evt) => {
+  if (evt) {
+    evt.preventDefault();
   }
-  let randomLink = linksAvatar[randomIndex];
-  if (randomLink < 10) {
-    randomLink = `0${randomLink}`;
-  }
-  linksAvatar.splice(randomIndex, 1);
-  return randomLink;
-};
-
-const getRandomArray = (array) => {
-  const MAX_LENGTH_ARRAY = 10;
-  const copyArray = array.slice();
-  const randomArray = Array.from({length: getRandomInt(1, MAX_LENGTH_ARRAY)});
-  for (let i = 0; i < randomArray.length; i++) {
-    randomArray[i] = getRandomElement(copyArray);
-  }
-  return randomArray;
-};
-
-const shuffleArray = (array) => {
-  let j;
-  let temp;
-  const copyArray = array.slice();
-  for(let i = copyArray.length - 1; i > 0; i--){
-    j = Math.floor(Math.random()*(i + 1));
-    temp = copyArray[j];
-    copyArray[j] = copyArray[i];
-    copyArray[i] = temp;
-  }
-  return copyArray;
+  form.reset();
+  mainMarker.setLatLng(DEFAULT_MARKER_POSITION);
+  mapCanvas.setView(DEFAULT_MARKER_POSITION, DEFAULT_VIEW);
+  mapCanvas.closePopup();
+  address.value = DEFAULT_MARKER_POSITION;
+  sliderElement.noUiSlider.set(START_SLIDER);
 };
 
 export {
-  getRandomInt,
-  getRandomElement,
-  shuffleArray,
-  getRandomFloat,
-  getLinksAvatar,
-  getRandomArray
+  showDataErrorMessage,
+  isEscapeKey,
+  formReset
 };
 
