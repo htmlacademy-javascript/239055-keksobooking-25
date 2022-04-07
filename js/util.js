@@ -8,7 +8,7 @@ import {
 
 import { sliderElement, START_SLIDER } from './priceSlider.js';
 
-const showDataErrorMessage = () => {
+const showDataErrorMessage = (textMessage, delay) => () => {
   const messageContainer = document.querySelector('.map__canvas');
   const message = document.createElement('div');
   message.style.zIndex = 1000;
@@ -24,12 +24,14 @@ const showDataErrorMessage = () => {
   message.style.margin = '0 auto';
   message.style.backgroundColor = '#ededed';
   message.style.opacity = '0.9';
-  message.textContent = 'Не удалось загрузить данные. Попробуйте обновить страницу';
+  message.textContent = textMessage;
   messageContainer.append(message);
 
-  setTimeout(() => {
-    message.remove();
-  }, 5000);
+  if (delay) {
+    setTimeout(() => {
+      message.remove();
+    }, delay);
+  }
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
