@@ -1,8 +1,9 @@
-import { switchForm } from './switchForm.js';
+import {
+  switchUserForm,
+  switchFilter
+} from './switchForm.js';
 import { createCard } from './createCard.js';
-import { getFilteredArray } from './filter.js';
 
-const MAX_NUMBER_MARKERS = 10;
 const DEFAULT_MARKER_POSITION = [35.69467, 139.76326];
 const DEFAULT_VIEW = 10;
 const MAIN_MARKER = {
@@ -18,11 +19,12 @@ const SIMILAR_MARKER = {
 const DECIMAL = 5;
 const address = document.querySelector('#address');
 address.value = DEFAULT_MARKER_POSITION;
-switchForm();
+switchUserForm();
+switchFilter();
 
 const mapCanvas = L.map('map-canvas');
 mapCanvas.on('load', () => {
-  switchForm(true);
+  switchUserForm(true);
 });
 mapCanvas.setView(DEFAULT_MARKER_POSITION, DEFAULT_VIEW);
 
@@ -48,15 +50,13 @@ const similarMarkerGroup = L.layerGroup();
 
 const renderCards = (cards) => {
   similarMarkerGroup.clearLayers();
-  const filteredArray = getFilteredArray(cards);
-  const copyFilteredArray = filteredArray.slice(0, MAX_NUMBER_MARKERS);
-
-  copyFilteredArray.forEach((element) => {
+  cards.forEach((element) => {
     const {location: {lat, lng}} = element;
     const similarMarker = L.marker([lat, lng], {icon: similarMarkerIcon});
     similarMarker.addTo(similarMarkerGroup);
     similarMarkerGroup.addTo(mapCanvas);
     similarMarker.bindPopup(createCard(element));
+    switchFilter(true);
   });
 };
 

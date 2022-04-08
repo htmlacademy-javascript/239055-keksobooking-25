@@ -1,23 +1,29 @@
-const map = document.querySelector('.map__filters');
-const mapElements = map.querySelectorAll('select, fieldset');
-const form = document.querySelector('.ad-form');
-const formElements = form.querySelectorAll('fieldset');
+const filtersMap = document.querySelector('.map__filters');
+const mapElements = filtersMap.querySelectorAll('select, fieldset');
+const userForm = document.querySelector('.ad-form');
+const formElements = userForm.querySelectorAll('fieldset');
 
-const switchForm = (activate = false) => {
-  map.classList.add('map__filters--disabled');
-  mapElements.forEach((element) => {
-    element.disabled = !activate;
-  });
-  form.classList.add('ad-form--disabled');
+const switchUserForm = (activate = false) => {
+  userForm.classList.add('ad-form--disabled');
   formElements.forEach((element) => {
     element.disabled = !activate;
   });
   if (activate) {
-    map.classList.remove('map__filters--disabled');
-    form.classList.remove('ad-form--disabled');
+    userForm.classList.remove('ad-form--disabled');
+  }
+};
+
+const switchFilter = (activate = false) => {
+  filtersMap.classList.add('map__filters--disabled');
+  mapElements.forEach((element) => {
+    element.disabled = !activate;
+  });
+  if (activate) {
+    filtersMap.classList.remove('map__filters--disabled');
   }
 };
 
 export {
-  switchForm
+  switchUserForm,
+  switchFilter
 };

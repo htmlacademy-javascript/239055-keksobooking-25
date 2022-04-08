@@ -1,12 +1,24 @@
 import {
-  mainMarker,
   DEFAULT_MARKER_POSITION,
   DEFAULT_VIEW,
+  mainMarker,
   mapCanvas,
-  address
+  address,
+  renderCards
 } from './map.js';
-
-import { sliderElement, START_SLIDER } from './priceSlider.js';
+import {
+  sliderElement,
+  START_SLIDER
+} from './priceSlider.js';
+import {
+  filterForm,
+  getFilteredArray
+} from './filter.js';
+import {
+  previewUserPhoto,
+  previewHousingPhoto
+} from './userPictures.js';
+import { getData } from './api.js';
 
 const showDataErrorMessage = (textMessage, delay) => () => {
   const messageContainer = document.querySelector('.map__canvas');
@@ -42,16 +54,32 @@ const formReset = (evt) => {
     evt.preventDefault();
   }
   form.reset();
+  filterForm.reset();
   mainMarker.setLatLng(DEFAULT_MARKER_POSITION);
   mapCanvas.setView(DEFAULT_MARKER_POSITION, DEFAULT_VIEW);
   mapCanvas.closePopup();
   address.value = DEFAULT_MARKER_POSITION;
   sliderElement.noUiSlider.set(START_SLIDER);
+  previewUserPhoto.src = 'img/muffin-grey.svg';
+  previewHousingPhoto.innerHTML = '';
+  getData((data) => {
+    const filteredData = getFilteredArray(data);
+    renderCards(filteredData);
+  },);
+};
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
 };
 
 export {
   showDataErrorMessage,
   isEscapeKey,
-  formReset
+  formReset,
+  debounce
 };
 

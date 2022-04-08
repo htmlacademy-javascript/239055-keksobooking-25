@@ -2,9 +2,9 @@ import './priceSlider.js';
 import { sendData } from './api.js';
 import { formReset } from './util.js';
 
-const form = document.querySelector('.ad-form');
-const buttonSubmit = form.querySelector('.ad-form__submit');
-const resetButton = form.querySelector('.ad-form__reset');
+const userForm = document.querySelector('.ad-form');
+const buttonSubmit = userForm.querySelector('.ad-form__submit');
+const resetButton = userForm.querySelector('.ad-form__reset');
 
 const blockButtonSubmit = () => {
   buttonSubmit.disabled = true;
@@ -14,15 +14,15 @@ const unblockButtonSubmit = () => {
   buttonSubmit.disabled = false;
 };
 
-const pristine = new Pristine(form, {
+const pristine = new Pristine(userForm, {
   classTo: 'ad-form__element',
   errorTextParent: 'ad-form__element',
   errorTextTag: 'span',
   errorTextClass: 'text__error'
 });
 
-const roomsNumber = form.querySelector('#room_number');
-const guestsNumber = form.querySelector('#capacity');
+const roomsNumber = userForm.querySelector('#room_number');
+const guestsNumber = userForm.querySelector('#capacity');
 const capacity = {
   1: [1],
   2: [1, 2],
@@ -56,8 +56,8 @@ const getGuestsErrorMessage = () => {
 pristine.addValidator(roomsNumber, validateCapacity, getRoomsErrorMessage);
 pristine.addValidator(guestsNumber, validateCapacity, getGuestsErrorMessage);
 
-const typeAd = form.querySelector('#type');
-const price = form.querySelector('#price');
+const typeAd = userForm.querySelector('#type');
+const price = userForm.querySelector('#price');
 const priceByType = {
   'bungalow': 0,
   'flat': 1000,
@@ -72,12 +72,12 @@ const changeMinPrice = () => {
 };
 
 typeAd.addEventListener('change', changeMinPrice);
-const validatePrice = () => price.value && Number(form.querySelector('#price').value) >= Number(form.querySelector('#price').min);
+const validatePrice = () => price.value && Number(userForm.querySelector('#price').value) >= Number(userForm.querySelector('#price').min);
 const getPriceErrorMessage = () => `Минимальная цена - ${price.min}`;
 pristine.addValidator(price, validatePrice, getPriceErrorMessage);
 
-const timeIn = form.querySelector('#timein');
-const timeOut = form.querySelector('#timeout');
+const timeIn = userForm.querySelector('#timein');
+const timeOut = userForm.querySelector('#timeout');
 const changeTimeIn = () => {
   timeOut.value = timeIn.value;
 };
@@ -88,7 +88,7 @@ timeIn.addEventListener('change', changeTimeIn);
 timeOut.addEventListener('change', changeTimeOut);
 
 const setUserFormSubmit = (onSuccess, onError) => {
-  form.addEventListener('submit', (evt) => {
+  userForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       blockButtonSubmit();
