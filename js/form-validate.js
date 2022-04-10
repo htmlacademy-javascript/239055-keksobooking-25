@@ -1,17 +1,16 @@
-import './priceSlider.js';
 import { sendData } from './api.js';
 import { formReset } from './util.js';
 
 const userForm = document.querySelector('.ad-form');
-const buttonSubmit = userForm.querySelector('.ad-form__submit');
+const submitButton = userForm.querySelector('.ad-form__submit');
 const resetButton = userForm.querySelector('.ad-form__reset');
 
-const blockButtonSubmit = () => {
-  buttonSubmit.disabled = true;
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
 };
 
-const unblockButtonSubmit = () => {
-  buttonSubmit.disabled = false;
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
 };
 
 const pristine = new Pristine(userForm, {
@@ -91,15 +90,15 @@ const setUserFormSubmit = (onSuccess, onError) => {
   userForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      blockButtonSubmit();
+      blockSubmitButton();
       sendData(
         () => {
           onSuccess();
-          unblockButtonSubmit();
+          unblockSubmitButton();
         },
         () => {
           onError();
-          unblockButtonSubmit();
+          unblockSubmitButton();
         },
         new FormData(evt.target)
       );

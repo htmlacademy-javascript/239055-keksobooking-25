@@ -1,5 +1,5 @@
-const filtersMap = document.querySelector('.map__filters');
-const mapElements = filtersMap.querySelectorAll('select, fieldset');
+const filterMap = document.querySelector('.map__filters');
+const mapElements = filterMap.querySelectorAll('select, fieldset');
 const userForm = document.querySelector('.ad-form');
 const formElements = userForm.querySelectorAll('fieldset');
 
@@ -14,12 +14,12 @@ const switchUserForm = (activate = false) => {
 };
 
 const switchFilter = (activate = false) => {
-  filtersMap.classList.add('map__filters--disabled');
+  filterMap.classList.add('map__filters--disabled');
   mapElements.forEach((element) => {
     element.disabled = !activate;
   });
   if (activate) {
-    filtersMap.classList.remove('map__filters--disabled');
+    filterMap.classList.remove('map__filters--disabled');
   }
 };
 

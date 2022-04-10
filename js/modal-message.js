@@ -1,4 +1,7 @@
-import { isEscapeKey, formReset } from './util.js';
+import {
+  isEscapeKey,
+  formReset
+} from './util.js';
 
 const bodyHTML = document.querySelector('body');
 const templateSuccess = document.querySelector('#success').content.querySelector('.success');
@@ -10,6 +13,7 @@ const closeOnError = onError.querySelector('.error__button');
 const showFormMessage = (message) => () => {
   bodyHTML.appendChild(message);
   message.classList.add('shownMessage');
+  document.addEventListener('keydown', onCloseFormMessage);
 };
 
 function onCloseFormMessage (evt) {
@@ -24,19 +28,20 @@ function onCloseFormMessage (evt) {
   }
 }
 
-document.addEventListener('keydown', onCloseFormMessage);
-
 onSuccess.addEventListener('click', () => {
   formReset();
   onSuccess.remove();
+  document.removeEventListener('keydown', onCloseFormMessage);
 });
 
 onError.addEventListener('click', () => {
   onError.remove();
+  document.removeEventListener('keydown', onCloseFormMessage);
 });
 
 closeOnError.addEventListener('click', () => {
   onError.remove();
+  document.removeEventListener('keydown', onCloseFormMessage);
 });
 
 export {

@@ -1,20 +1,16 @@
-// const PRICE_RANGE = {
-//   low: {
-//     min: 0,
-//     max: 9999
-//   },
-//   middle: {
-//     min: 10000,
-//     max: 50000
-//   },
-//   high: {
-//     min: 50001,
-//     max: 100000
-//   }
-// };
-const AVERAGE_PRICE_RANGE = {
-  min: 10000,
-  max: 50000
+const PRICE_RANGE = {
+  low: {
+    min: 0,
+    max: 9999
+  },
+  middle: {
+    min: 10000,
+    max: 50000
+  },
+  high: {
+    min: 50001,
+    max: 100000
+  }
 };
 const DEFAULT_VALUE = 'any';
 const MAX_NUMBER_AD = 10;
@@ -31,10 +27,10 @@ const getFeaturesHouse = () => {
   return values;
 };
 
-const comparisonFeatures = (element) => {
+const compareFeatures = (element) => {
   const featuresFilter = getFeaturesHouse();
   const featuresAd = element.offer.features;
-  const comparison = () => {
+  const compare = () => {
     if (featuresAd) {
       for (let i = 0; i < featuresFilter.length; i++) {
         if (!featuresAd.includes(featuresFilter[i])) {
@@ -44,35 +40,24 @@ const comparisonFeatures = (element) => {
       return true;
     }
   };
-  if (comparison() || !featuresFilter.length) {
+  if (compare() || !featuresFilter.length) {
     return true;
   }
   return false;
 };
 
-const comparisonType = (element) =>
-  (element.offer.type === typeHouse.value) || typeHouse.value === DEFAULT_VALUE;
+const compareType = (element) =>
+  typeHouse.value === DEFAULT_VALUE || (element.offer.type === typeHouse.value);
 
-// const comparisonPrice = (element) =>
-//   (element.offer.price >= PRICE_RANGE[priceHouse.value].min &&
-//     element.offer.price <= PRICE_RANGE[priceHouse.value].max)
-//     || priceHouse.value === DEFAULT_VALUE;
+const comparePrice = (element) =>
+  priceHouse.value === DEFAULT_VALUE || element.offer.price >= PRICE_RANGE[priceHouse.value].min &&
+    element.offer.price <= PRICE_RANGE[priceHouse.value].max;
 
-const comparisonPrice = (element) => {
-  let priceRange = 'middle';
-  if (element.offer.price < AVERAGE_PRICE_RANGE.min) {
-    priceRange = 'low';
-  } else if (element.offer.price > AVERAGE_PRICE_RANGE.max) {
-    priceRange = 'high';
-  }
-  return (priceRange === priceHouse.value) || priceHouse.value === DEFAULT_VALUE;
-};
+const compareRooms = (element) =>
+  roomsHouse.value === DEFAULT_VALUE || (element.offer.rooms === parseInt((roomsHouse.value), 10));
 
-const comparisonRooms = (element) =>
-  (element.offer.rooms === parseInt((roomsHouse.value), 10)) || roomsHouse.value === DEFAULT_VALUE;
-
-const comparisonGuests = (element) =>
-  (element.offer.guests === parseInt((guestsHouse.value), 10)) || guestsHouse.value === DEFAULT_VALUE;
+const compareGuests = (element) =>
+  guestsHouse.value === DEFAULT_VALUE || (element.offer.guests === parseInt((guestsHouse.value), 10));
 
 const getFilteredArray = (array) => {
   const newArray = [];
@@ -81,11 +66,11 @@ const getFilteredArray = (array) => {
   for (let i = 0; i < array.length; i++) {
     if (newArray.length < MAX_NUMBER_AD) {
       if (
-        comparisonType(array[i]) &&
-        comparisonPrice(array[i]) &&
-        comparisonRooms(array[i]) &&
-        comparisonGuests(array[i]) &&
-        comparisonFeatures(array[i])) {
+        compareType(array[i]) &&
+        comparePrice(array[i]) &&
+        compareRooms(array[i]) &&
+        compareGuests(array[i]) &&
+        compareFeatures(array[i])) {
         newArray.push(array[i]);
       }
     }
