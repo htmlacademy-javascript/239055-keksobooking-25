@@ -66,7 +66,7 @@ const compareGuests = (element) =>
 const getFilteredArray = (array) => {
   const newArray = [];
 
-  for (let i = 0; i < array.length || newArray.length === MAX_NUMBER_AD; i++) {
+  for (let i = 0; i < array.length && newArray.length < MAX_NUMBER_AD; i++) {
     if (
       compareType(array[i]) &&
       comparePrice(array[i]) &&
