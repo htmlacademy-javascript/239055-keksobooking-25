@@ -73,10 +73,10 @@ mapCanvas.on('load', () => {
   switchUserForm(true);
   getData(
     (data) => {
-      let filteredData = getFilteredArray(data);
-      renderCards(filteredData);
+      renderCards(getFilteredArray(data));
+      switchFilter(true);
       onChangeFilter(debounce(() => {
-        filteredData = getFilteredArray(data);
+        const filteredData = getFilteredArray(data);
         if (!filteredData.length) {
           const show = showDataErrorMessage('Нет соответствующих объявлений', DELAY_POPUP_MESSAGE);
           show();
@@ -110,7 +110,6 @@ function renderCards (cards) {
     similarMarker.addTo(similarMarkerGroup);
     similarMarkerGroup.addTo(mapCanvas);
     similarMarker.bindPopup(createCard(element));
-    switchFilter(true);
   });
 }
 

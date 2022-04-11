@@ -40,39 +40,43 @@ const compareFeatures = (element) => {
       return true;
     }
   };
-  if (compare() || !featuresFilter.length) {
+  if (!featuresFilter.length || compare()) {
     return true;
   }
   return false;
 };
 
 const compareType = (element) =>
-  typeHouse.value === DEFAULT_VALUE || (element.offer.type === typeHouse.value);
+  typeHouse.value === DEFAULT_VALUE ||
+  (element.offer.type === typeHouse.value);
 
 const comparePrice = (element) =>
-  priceHouse.value === DEFAULT_VALUE || element.offer.price >= PRICE_RANGE[priceHouse.value].min &&
-    element.offer.price <= PRICE_RANGE[priceHouse.value].max;
+  priceHouse.value === DEFAULT_VALUE ||
+  element.offer.price >= PRICE_RANGE[priceHouse.value].min &&
+  element.offer.price <= PRICE_RANGE[priceHouse.value].max;
 
 const compareRooms = (element) =>
-  roomsHouse.value === DEFAULT_VALUE || (element.offer.rooms === parseInt((roomsHouse.value), 10));
+  roomsHouse.value === DEFAULT_VALUE ||
+  (element.offer.rooms === parseInt((roomsHouse.value), 10));
 
 const compareGuests = (element) =>
-  guestsHouse.value === DEFAULT_VALUE || (element.offer.guests === parseInt((guestsHouse.value), 10));
+  guestsHouse.value === DEFAULT_VALUE ||
+  (element.offer.guests === parseInt((guestsHouse.value), 10));
 
 const getFilteredArray = (array) => {
   const newArray = [];
-  getFeaturesHouse();
 
   for (let i = 0; i < array.length; i++) {
-    if (newArray.length < MAX_NUMBER_AD) {
-      if (
-        compareType(array[i]) &&
-        comparePrice(array[i]) &&
-        compareRooms(array[i]) &&
-        compareGuests(array[i]) &&
-        compareFeatures(array[i])) {
-        newArray.push(array[i]);
-      }
+    if (
+      compareType(array[i]) &&
+      comparePrice(array[i]) &&
+      compareRooms(array[i]) &&
+      compareGuests(array[i]) &&
+      compareFeatures(array[i])) {
+      newArray.push(array[i]);
+    }
+    if (newArray.length === MAX_NUMBER_AD) {
+      break;
     }
   }
   return newArray;
