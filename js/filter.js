@@ -66,7 +66,7 @@ const compareGuests = (element) =>
 const getFilteredArray = (array) => {
   const newArray = [];
 
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length || newArray.length === MAX_NUMBER_AD; i++) {
     if (
       compareType(array[i]) &&
       comparePrice(array[i]) &&
@@ -74,9 +74,6 @@ const getFilteredArray = (array) => {
       compareGuests(array[i]) &&
       compareFeatures(array[i])) {
       newArray.push(array[i]);
-    }
-    if (newArray.length === MAX_NUMBER_AD) {
-      break;
     }
   }
   return newArray;
