@@ -1,10 +1,8 @@
-import './formValidate.js';
-import { renderCards } from './map.js';
-import { showDataErrorMessage } from './util.js';
-import { setUserFormSubmit } from './formValidate.js';
-import { showFormMessage, onSuccess, onError } from './modalMessage.js';
-import { getData } from './api.js';
-
-getData(renderCards, showDataErrorMessage);
+import { setUserFormSubmit } from './form-validate.js';
+import {
+  showFormMessage,
+  onSuccess,
+  onError
+} from './modal-message.js';
 
 setUserFormSubmit(showFormMessage(onSuccess), showFormMessage(onError));

@@ -5,7 +5,6 @@ const TYPES_AD = {
   bungalow: 'Бунгало',
   hotel: 'Отель',
 };
-
 const WIDTH_PHOTO = 45;
 const HEIGHT_PHOTO = 40;
 
