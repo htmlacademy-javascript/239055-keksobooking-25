@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import { formReset } from './util.js';
+import { onFormResetClick } from './util.js';
 
 const userForm = document.querySelector('.ad-form');
 const submitButton = userForm.querySelector('.ad-form__submit');
@@ -65,26 +65,26 @@ const priceByType = {
   'palace': 10000
 };
 
-const changeMinPrice = () => {
+const onPriceChange = () => {
   price.min = priceByType[typeAd.value];
   price.placeholder = priceByType[typeAd.value];
 };
 
-typeAd.addEventListener('change', changeMinPrice);
+typeAd.addEventListener('change', onPriceChange);
 const validatePrice = () => price.value && Number(userForm.querySelector('#price').value) >= Number(userForm.querySelector('#price').min);
 const getPriceErrorMessage = () => `Минимальная цена - ${price.min}`;
 pristine.addValidator(price, validatePrice, getPriceErrorMessage);
 
 const timeIn = userForm.querySelector('#timein');
 const timeOut = userForm.querySelector('#timeout');
-const changeTimeIn = () => {
+const onTimeInChange = () => {
   timeOut.value = timeIn.value;
 };
-const changeTimeOut = () => {
+const onTimeOutChange = () => {
   timeIn.value = timeOut.value;
 };
-timeIn.addEventListener('change', changeTimeIn);
-timeOut.addEventListener('change', changeTimeOut);
+timeIn.addEventListener('change', onTimeInChange);
+timeOut.addEventListener('change', onTimeOutChange);
 
 const setUserFormSubmit = (onSuccess, onError) => {
   userForm.addEventListener('submit', (evt) => {
@@ -106,6 +106,6 @@ const setUserFormSubmit = (onSuccess, onError) => {
   });
 };
 
-resetButton.addEventListener('click', formReset);
+resetButton.addEventListener('click', onFormResetClick);
 
 export { setUserFormSubmit };

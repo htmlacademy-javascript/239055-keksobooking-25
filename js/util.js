@@ -23,7 +23,7 @@ import { getData } from './api.js';
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const form = document.querySelector('.ad-form');
-const formReset = (evt) => {
+const onFormResetClick = (evt) => {
   if (evt) {
     evt.preventDefault();
   }
@@ -52,7 +52,7 @@ const debounce = (callback, timeoutDelay) => {
 
 export {
   isEscapeKey,
-  formReset,
+  onFormResetClick,
   debounce
 };
 

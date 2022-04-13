@@ -1,6 +1,6 @@
 import {
   isEscapeKey,
-  formReset
+  onFormResetClick
 } from './util.js';
 
 const bodyHTML = document.querySelector('body');
@@ -21,7 +21,7 @@ function onCloseFormMessage (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     if (shownMessage.classList.contains('success')) {
-      formReset();
+      onFormResetClick();
     }
     shownMessage.remove();
     document.removeEventListener('keydown', onCloseFormMessage);
@@ -29,7 +29,7 @@ function onCloseFormMessage (evt) {
 }
 
 onSuccess.addEventListener('click', () => {
-  formReset();
+  onFormResetClick();
   onSuccess.remove();
   document.removeEventListener('keydown', onCloseFormMessage);
 });
